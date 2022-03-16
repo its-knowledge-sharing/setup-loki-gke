@@ -2,5 +2,5 @@
 
 source .env
 
-gsutil mb -b on -l us-central1 gs://${BUCKET_NAME}/
-gsutil ls gs://${BUCKET_NAME}/
+gsutil mb -b on -l us-central1 gs://${BUCKET_NAME}/ --project ${PROJECT}
+gsutil ls gs://${BUCKET_NAME}/ --project ${PROJECT}
