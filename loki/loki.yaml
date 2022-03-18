@@ -18,8 +18,8 @@ querier:
   persistence:
     enabled: true
 loki:    
-  image:
-    tag: 2.4.0
+  #image:
+  #  tag: 2.4.0
   config: |
       auth_enabled: false
       server:
