@@ -26,4 +26,4 @@ helm template loki loki-helm/loki-distributed \
 
 kubectl apply -n ${NS} -f tmp-loki.yaml
 
-kubectl apply -n ${NS} -f loki/loki-ing.yaml
+#kubectl apply -n ${NS} -f loki/loki-ing.yaml
