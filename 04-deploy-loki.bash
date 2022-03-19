@@ -19,6 +19,7 @@ helm repo add loki-helm https://grafana.github.io/helm-charts/
 
 helm template loki loki-helm/loki-distributed \
 -f loki/loki.yaml \
+-f loki/loki-volume.yaml \
 --set customParams.gcsBucket=${BUCKET_NAME} \
 --version 0.45.1 \
 --namespace ${NS} > tmp-loki.yaml

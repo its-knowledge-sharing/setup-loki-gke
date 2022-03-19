@@ -1,0 +1,46 @@
+
+querier:
+  extraVolumes:
+    - name: gcp-sa
+      secret:
+        secretName: gcp-sa
+        items:
+        - key: gcp-sa-file
+          path: gcp-sa-file.json
+  extraVolumeMounts:
+    - name: gcp-sa
+      mountPath: "/secrets"
+      readOnly: true
+  extraEnv:
+    - name: GOOGLE_APPLICATION_CREDENTIALS
+      value: /secrets/gcp-sa-file.json
+ingester:
+  extraVolumes:
+    - name: gcp-sa
+      secret:
+        secretName: gcp-sa
+        items:
+        - key: gcp-sa-file
+          path: gcp-sa-file.json
+  extraVolumeMounts:
+    - name: gcp-sa
+      mountPath: "/secrets"
+      readOnly: true
+  extraEnv:
+    - name: GOOGLE_APPLICATION_CREDENTIALS
+      value: /secrets/gcp-sa-file.json
+compactor:
+  extraVolumes:
+    - name: gcp-sa
+      secret:
+        secretName: gcp-sa
+        items:
+        - key: gcp-sa-file
+          path: gcp-sa-file.json
+  extraVolumeMounts:
+    - name: gcp-sa
+      mountPath: "/secrets"
+      readOnly: true
+  extraEnv:
+    - name: GOOGLE_APPLICATION_CREDENTIALS
+      value: /secrets/gcp-sa-file.json
