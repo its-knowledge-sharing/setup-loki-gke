@@ -1,0 +1,29 @@
+fullnameOverride: grafana-loki
+envRenderSecret: {}
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+
+    - name: Loki
+      type: loki
+      access: Server
+      url: http://loki-log-query-frontend.loki.svc.cluster.local:3100
+      #skip tls
+
+dashboardProviders: {}
+dashboardsConfigMaps: {}
+
+grafana.ini:
+  log:
+    level: debug
+  server:
+    root_url: ""
+  auth:
+    #disable_login_form: true
+    org_role: Editor
+    basic:
+      enabled: false
+    annonymous:
+      enabled: true
