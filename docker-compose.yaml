@@ -13,7 +13,7 @@ services:
       - /var/log:/host/var/log:ro
     command: -config.file=/etc/promtail/promtail-config.yaml -config.expand-env=true
     environment:
-      - DUMMY=003
+      - DUMMY=004
       - LOKI_DOMAIN=${LOKI_DOMAIN}
       - REGION=${REGION}
       - ZONE=${ZONE}

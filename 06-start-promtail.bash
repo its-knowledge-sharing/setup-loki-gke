@@ -9,6 +9,7 @@ sudo cat << EOF > ${ENV_FILE}
 DATA_DIR=${DATA_DIR}
 INSTANCE=${INSTANCE}
 CONTAINERS_LOG_DIR=/var/lib/docker/containers
+LOKI_DOMAIN=${LOKI_DOMAIN}
 REGION=us-central1
 ZONE=us-central1-a
 GROUP=demo
