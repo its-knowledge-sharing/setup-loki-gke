@@ -1,0 +1,60 @@
+version: '3.0'
+services: 
+
+  # Monitoring here below ...
+  promtail:
+    container_name: promtail
+    image: grafana/promtail:2.4.2
+    restart: always
+    volumes:
+      - ${CONTAINERS_LOG_DIR}:/var/lib/docker/containers:ro
+      - ${DATA_DIR}/promtail-config/promtail.yaml:/etc/promtail/promtail-config.yaml
+      - ${DATA_DIR}/promtail:/tmp/position
+      - /var/log:/host/var/log:ro
+    command: -config.file=/etc/promtail/promtail-config.yaml -config.expand-env=true
+    environment:
+      - DUMMY=003
+      - LOKI_DOMAIN=${LOKI_DOMAIN}
+      - REGION=${REGION}
+      - ZONE=${ZONE}
+      - INSTANCE=${INSTANCE}
+      - GROUP=${GROUP}
+    logging:
+      driver: "json-file"
+      options: 
+        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"  
+  
+  node-exporter:
+    image: prom/node-exporter:v1.2.2
+    container_name: node-exporter
+    pid: host
+    restart: always
+    volumes:
+      - /:/rootfs:ro,rslave
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+    command:
+      - '--path.procfs=/host/proc' 
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"      
+    logging:
+      driver: "json-file"
+      options: 
+        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+
+  cadvisor:
+    image: 'google/cadvisor:latest'
+    restart: always
+    container_name: cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk:/dev/disk/:ro
+    logging:
+      driver: "json-file"
+      options: 
+        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
